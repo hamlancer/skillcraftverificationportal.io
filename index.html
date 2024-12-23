@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Certificate Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      max-width: 100px;
+      border-radius: 50%;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEioRAReaKjM-r3K4pY55ebh-_3HygQrlenkJfHDHMo8QDnTFkDtECjl5WUn-dZEErgX8RymT828kpEoztQLzimyg3a78UekOS0fzYQPHdBVfuMGux5Vri316_OUMX7T2zv5GUowATLRo1VUERLh3atH0xXIj-_tceVGLIqSF4vrKcWU8ZZE-xyzU6ZlPq7v/w212-h212/Skill%20craft%20logo.png" alt="Skill Craft Institute Sharqpur" class="institute-logo" alt="Skill Craft Institute Logo">
+    </div>
+    <h2>Welcome to Certificate Verification Portal</h2>
+    <p>Please Enter Student ID and Admission Number to Verify</p>
+
+    <form id="verificationForm">
+      <input type="text" id="userId" placeholder="Enter Student ID" required>
+      <input type="text" id="admissionNumber" placeholder="Enter Admission Number" required>
+      <button type="submit">Verify</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("verificationForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault(); // Prevent form submission
+
+      const userId = document.getElementById("userId").value.trim();
+      const admissionNumber = document.getElementById("admissionNumber").value.trim();
+
+      if (!userId || !admissionNumber) {
+        resultDiv.textContent = "Error: Please enter both Student ID and Admission Number.";
+        return;
+      }
+
+      resultDiv.textContent = "Verifying... Please wait.";
+
+      try {
+        const response = await fetch(`https://script.google.com/macros/s/AKfycbwOWiZz-3rJRXEKRSuJws3Rj_c1RXcOvbHPUMBXKvFGJVEqwFghhLIT4wE56NDAUZqVYg/exec?userId=${encodeURIComponent(userId)}&admissionNumber=${encodeURIComponent(admissionNumber)}`);
+        const text = await response.text();
+        resultDiv.textContent = text;
+      } catch (error) {
+        resultDiv.textContent = "Error: Unable to verify. Please try again later.";
+      }
+    });
+  </script>
+</body>
+</html>
